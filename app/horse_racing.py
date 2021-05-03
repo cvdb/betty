@@ -63,7 +63,9 @@ def find_bsp_near_11(bsp_list, bsp_min, bsp_max):
         bsp_perc = bsp_over_min / bsp_max_over_min * 100
         bsp_percs.append(bsp_perc)
     bsp_near_11 = min(bsp_percs, key=lambda x:abs(x-11))
-    return bsp_near_11
+    # Don't bet if there is no value
+    if bsp_near_11 >= 11:
+        return bsp_near_11
 
 def get_11_perc_race_data(df):
     # Find the BSP per race that is the closest to 11%
