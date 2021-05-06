@@ -23,7 +23,8 @@ def get_race_data(df):
             BSP_MIN=pd.NamedAgg('BSP', 'min'),
             BSP_MAX=pd.NamedAgg('BSP', 'max'),
             BSP_COUNT=pd.NamedAgg('BSP', 'count'),
-            BSP_LIST=pd.NamedAgg('BSP', lambda x: ','.join(map(str, x))))
+            BSP_LIST=pd.NamedAgg('BSP', lambda x: ','.join(map(str, x))),
+            BSP_LIST_ROUNDED=pd.NamedAgg('BSP', lambda x: ', '.join(map(str, round(x, 2)))))
 
     # Now get winning BSP and selection ID
     winners = df[df['WIN_LOSE'] == 1]
@@ -56,16 +57,22 @@ def get_race_data(df):
 
 
 def find_bsp_near_11(bsp_list, bsp_min, bsp_max):
-    bsp_percs = []
+    bsps = []
+    ave_bsp_perc = 5.26
+
     for bsp in bsp_list.split(','):
         bsp_max_over_min = bsp_max / bsp_min
         bsp_over_min = float(bsp) / bsp_min
         bsp_perc = bsp_over_min / bsp_max_over_min * 100
-        bsp_percs.append(bsp_perc)
-    bsp_near_11 = min(bsp_percs, key=lambda x:abs(x-11))
-    # Don't bet if there is no value
-    if bsp_near_11 >= 11:
-        return bsp_near_11
+        if bsp == str(bsp_min):
+            # Always bet on the min BSP
+            bsps.append(bsp)
+        elif (bsp_perc < ave_bsp_perc) and (int(bsp_min) > len(bsps)):
+            # we can bet on BSP's up to min BSP
+            # for example: if min BSP is 3.2 we can place 3 bets of $1
+            bsps.append(bsp)
+
+    return ','.join(str(x) for x in bsps)
 
 def get_11_perc_race_data(df):
     # Find the BSP per race that is the closest to 11%

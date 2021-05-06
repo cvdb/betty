@@ -9,6 +9,8 @@ horse_racing_folders = [
     '../../data/racing_data'
 ]
 
+year_filter = '.'
+
 # Set default options
 pd.set_option('display.max_rows', None)
 
@@ -31,12 +33,14 @@ def __load_csv(file_paths):
         if os.path.isdir(file_path):
             print('loading CSV data from folder: ' + file_path)
             for path in glob.iglob(file_path + '**/**/*.csv', recursive=True):
-                dfs.append(pd.read_csv(path, parse_dates=True))
+                if year_filter in path:
+                    dfs.append(pd.read_csv(path, parse_dates=True))
         elif os.path.isfile(file_path):
-            ext = os.path.splitext(file_path)[1]
-            if ext == '.csv':
-                print('loading CSV data from file: ' + file_path)
-                dfs.append(pd.read_csv(path, parse_dates=True))
+            if year_filter in file_path:
+                ext = os.path.splitext(file_path)[1]
+                if ext == '.csv':
+                    print('loading CSV data from file: ' + file_path)
+                    dfs.append(pd.read_csv(path, parse_dates=True))
         
     return pd.concat(dfs, axis=0)
 
