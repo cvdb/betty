@@ -128,6 +128,15 @@ def get_market_catalogues():
     df.sort_values(by=['market_start_time'], inplace=True)
     return df
 
+# find the ACTIVE runner with the lowest BSP
+def get_fav_runner(runners):
+    lowest_runner = runners[0];
+    for runner in runners:
+        print(runner.status)
+        if runner.status == 'ACTIVE' and runner.sp.actual_sp < lowest_runner.sp.actual_sp:
+            lowest_runner = runner
+    return lowest_runner
+
 def get_market_books(marketids):
     price_filter = betfairlightweight.filters.price_projection(price_data=['EX_BEST_OFFERS', 'SP_AVAILABLE', 'SP_TRADED'])
     market_books = []
@@ -143,22 +152,35 @@ def get_market_books(marketids):
         )
         market_books.extend(mbooks)
     
-    data = [[] for i in range(5)]
+    data = [[] for i in range(7)]
 
     for mb in market_books:
         # print(mb.json())
         data[0].append(mb.market_id)
         data[1].append(mb.status)
         data[2].append(mb.bsp_reconciled)
-        data[3].append(mb.complete)
-        data[4].append(mb.inplay)
+        data[3].append(mb.inplay)
+        data[4].append(mb.total_matched)
+        best_runner = None
+        if mb.bsp_reconciled:
+            best_runner = get_fav_runner(mb.runners)
+        if best_runner and best_runner.status == 'ACTIVE':
+            data[5].append(best_runner.selection_id)
+            data[6].append(best_runner.sp.actual_sp)
+        else:
+            data[5].append(None)
+            data[6].append(None)
+
+    # extract orders placed against the runner here    
 
     df = pd.DataFrame({
         'market_id': data[0],
         'market_status': data[1],
         'bsp_reconciled': data[2],
-        'complete': data[3],
-        'inplay': data[4],
+        'inplay': data[3],
+        'total_matched': data[4],
+        'runner_selection_id': data[5],
+        'runner_bsp': data[6],
     })
     return df
 
@@ -166,7 +188,7 @@ def place_bets():
     print('placing bets')
     df_market_catalogues = get_market_catalogues()
     print('\nmarket catalogues: \n' + str(df_market_catalogues))
-    # now get the markey book for each market_catalogue
+    # now get the market book for each market_catalogue
     df_market_books = get_market_books(df_market_catalogues['market_id'].tolist())
     # df_market_books = get_market_books(['1.183229073'])
     print('\nmarket books: \n' + str(df_market_books))
