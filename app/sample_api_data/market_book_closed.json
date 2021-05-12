@@ -1,0 +1,211 @@
+{
+  "marketId": "1.183229073",
+  "isMarketDataDelayed": true,
+  "status": "CLOSED",
+  "betDelay": 1,
+  "bspReconciled": true,
+  "complete": true,
+  "inplay": true,
+  "numberOfWinners": 1,
+  "numberOfRunners": 12,
+  "numberOfActiveRunners": 0,
+  "totalMatched": 0,
+  "totalAvailable": 0,
+  "crossMatching": false,
+  "runnersVoidable": false,
+  "version": 3809617212,
+  "runners": [
+    {
+      "selectionId": 28209251,
+      "handicap": 0,
+      "status": "LOSER",
+      "adjustmentFactor": 2.273,
+      "sp": {
+        "backStakeTaken": [],
+        "layLiabilityTaken": [],
+        "actualSP": 20.045141214
+      },
+      "ex": {
+        "availableToBack": [],
+        "availableToLay": [],
+        "tradedVolume": []
+      }
+    },
+    {
+      "selectionId": 26015584,
+      "handicap": 0,
+      "status": "LOSER",
+      "adjustmentFactor": 4.167,
+      "sp": {
+        "backStakeTaken": [],
+        "layLiabilityTaken": [],
+        "actualSP": 25.11033922336269
+      },
+      "ex": {
+        "availableToBack": [],
+        "availableToLay": [],
+        "tradedVolume": []
+      }
+    },
+    {
+      "selectionId": 28414734,
+      "handicap": 0,
+      "status": "LOSER",
+      "adjustmentFactor": 2.222,
+      "sp": {
+        "backStakeTaken": [],
+        "layLiabilityTaken": [],
+        "actualSP": 57.550986206789844
+      },
+      "ex": {
+        "availableToBack": [],
+        "availableToLay": [],
+        "tradedVolume": []
+      }
+    },
+    {
+      "selectionId": 853797,
+      "handicap": 0,
+      "status": "LOSER",
+      "adjustmentFactor": 0.952,
+      "sp": {
+        "backStakeTaken": [],
+        "layLiabilityTaken": [],
+        "actualSP": 294.622767477
+      },
+      "ex": {
+        "availableToBack": [],
+        "availableToLay": [],
+        "tradedVolume": []
+      }
+    },
+    {
+      "selectionId": 39428603,
+      "handicap": 0,
+      "status": "LOSER",
+      "adjustmentFactor": 15.625,
+      "sp": {
+        "backStakeTaken": [],
+        "layLiabilityTaken": [],
+        "actualSP": 8.51231849913396
+      },
+      "ex": {
+        "availableToBack": [],
+        "availableToLay": [],
+        "tradedVolume": []
+      }
+    },
+    {
+      "selectionId": 38590580,
+      "handicap": 0,
+      "status": "LOSER",
+      "adjustmentFactor": 21.739,
+      "sp": {
+        "backStakeTaken": [],
+        "layLiabilityTaken": [],
+        "actualSP": 3.4802015348372524
+      },
+      "ex": {
+        "availableToBack": [],
+        "availableToLay": [],
+        "tradedVolume": []
+      }
+    },
+    {
+      "selectionId": 39057266,
+      "handicap": 0,
+      "status": "LOSER",
+      "adjustmentFactor": 34.02,
+      "sp": {
+        "backStakeTaken": [],
+        "layLiabilityTaken": [],
+        "actualSP": 2.96
+      },
+      "ex": {
+        "availableToBack": [],
+        "availableToLay": [],
+        "tradedVolume": []
+      }
+    },
+    {
+      "selectionId": 39428604,
+      "handicap": 0,
+      "status": "WINNER",
+      "adjustmentFactor": 9.091,
+      "sp": {
+        "backStakeTaken": [],
+        "layLiabilityTaken": [],
+        "actualSP": 24
+      },
+      "ex": {
+        "availableToBack": [],
+        "availableToLay": [],
+        "tradedVolume": []
+      }
+    },
+    {
+      "selectionId": 39428605,
+      "handicap": 0,
+      "status": "LOSER",
+      "adjustmentFactor": 3.226,
+      "sp": {
+        "backStakeTaken": [],
+        "layLiabilityTaken": [],
+        "actualSP": 18.98203396712663
+      },
+      "ex": {
+        "availableToBack": [],
+        "availableToLay": [],
+        "tradedVolume": []
+      }
+    },
+    {
+      "selectionId": 39428606,
+      "handicap": 0,
+      "status": "LOSER",
+      "adjustmentFactor": 3.571,
+      "sp": {
+        "backStakeTaken": [],
+        "layLiabilityTaken": [],
+        "actualSP": 31.740282348
+      },
+      "ex": {
+        "availableToBack": [],
+        "availableToLay": [],
+        "tradedVolume": []
+      }
+    },
+    {
+      "selectionId": 39428607,
+      "handicap": 0,
+      "status": "LOSER",
+      "adjustmentFactor": 0.613,
+      "sp": {
+        "backStakeTaken": [],
+        "layLiabilityTaken": [],
+        "actualSP": 420
+      },
+      "ex": {
+        "availableToBack": [],
+        "availableToLay": [],
+        "tradedVolume": []
+      }
+    },
+    {
+      "selectionId": 13354649,
+      "handicap": 0,
+      "status": "LOSER",
+      "adjustmentFactor": 2.5,
+      "sp": {
+        "backStakeTaken": [],
+        "layLiabilityTaken": [],
+        "actualSP": 37.39434135562187
+      },
+      "ex": {
+        "availableToBack": [],
+        "availableToLay": [],
+        "tradedVolume": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "marketId": "1.183229083",
+  "marketName": "R6 1400m CL1",
+  "marketStartTime": "2021-05-12T07:40:00.000Z",
+  "description": {
+    "persistenceEnabled": true,
+    "bspMarket": true,
+    "marketTime": "2021-05-12T07:40:00.000Z",
+    "suspendTime": "2021-05-12T07:40:00.000Z",
+    "bettingType": "ODDS",
+    "turnInPlayEnabled": true,
+    "marketType": "WIN",
+    "regulator": "MALTA LOTTERIES AND GAMBLING AUTHORITY",
+    "marketBaseRate": 6,
+    "discountAllowed": true,
+    "wallet": "UK wallet",
+    "rules": "<br><a href=\"https://www.betfair.com.au/hub/getting-started/products/starting-price/\" target=\"_blank\"><img src=\"https://www.betfair.com.au/images/starting-price.png\" alt=\"Betfair SP\" border=\"0\"></a> <a href=\"https://www.racingandsports.com.au/en/betfair-form/\" target=\"_blank\"><img src=\"https://www.betfair.com.au/images/theformhub.png\" alt=\"The Form Hub\" border=\"0\"></a><br><a href=\"https://www.betfair.com.au/hub/getting-started/the-basics/commissions-charges/\" target=\"_blank\"><img src=\"https://www.betfair.com.au/images/MBR-6percentage.png\" alt=\"6% Market Base Rate\" border=\"0\"></a><br><br><b>MARKET INFORMATION</b><br><br>For further information please see <a href=http://content.betfair.com/aboutus/content.asp?sWhichKey=Rules%20and%20Regulations#undefined.do style=color:0163ad; text-decoration: underline; target=_blank>Rules & Regs</a>.<br><br>Who will win this race? Betfair Non-Runner Rule applies. Reduction factors may be updated periodically at the discretion of Betfair based on trading in the market, but after approximately 5 minutes from scheduled ‘off’ time of a given race, they will be updated only in exceptional circumstances. Odds of matched bets will only be adjusted if there are ADDITIONAL non-runners after your bet is matched. This market will turn <b>IN PLAY</b> at the off with all unmatched bets cancelled once the Betfair SP reconciliation process has been completed. Betting will be suspended at the end of the race. This market will initially be settled on a First Past the Post basis. However we will re-settle all bets should the official result at the time of the \"weigh-in\" announcement differ from any initial settlement. Dead Heat rules apply.<br><br><b>BSP (Betfair Starting Price) operates on this market</b>. For more information about setting a Starting Price odds limit  <a target=\"_blank\"  href=\"https://www.betfair.com.au/hub/betfair-starting-price-faqs/\">click here</a><br><br>This is a <a href=\"https://www.betfair.com.au/hub/cross-matching-on-exchange-markets/\" target=\"_blank\">cross-matching</a> market.<b><br><br>Customers should be aware that:</b><ol><li><b>transmissions described as \"live\" by some broadcasters may actually be delayed and that all in-play races are not necessarily televised;</b></li><li><b>the extent of any such delay may vary between customers, depending on the set-up through which they are receiving pictures or data.</b> </li><li>Information (such as jockey silks, saddlecloth numbers etc) is provided \"as is\" and is for guidance only. Betfair does not guarantee the accuracy of this information and use of it to place bets is entirely at your own risk.</li></ol><br>",
+    "rulesHasDate": true,
+    "raceType": "Flat",
+    "priceLadderDescription": {
+      "type": "CLASSIC"
+    }
+  },
+  "totalMatched": 223.116648,
+  "runners": [
+    {
+      "selectionId": 39428626,
+      "runnerName": "1. Lonehand Larry",
+      "handicap": 0,
+      "sortPriority": 1
+    },
+    {
+      "selectionId": 39428627,
+      "runnerName": "2. Elafella",
+      "handicap": 0,
+      "sortPriority": 2
+    },
+    {
+      "selectionId": 39428628,
+      "runnerName": "3. Mightiness",
+      "handicap": 0,
+      "sortPriority": 3
+    },
+    {
+      "selectionId": 24914488,
+      "runnerName": "4. Hinchinmose",
+      "handicap": 0,
+      "sortPriority": 4
+    },
+    {
+      "selectionId": 39428629,
+      "runnerName": "5. Sky Five",
+      "handicap": 0,
+      "sortPriority": 5
+    },
+    {
+      "selectionId": 20230384,
+      "runnerName": "6. Rock This Country",
+      "handicap": 0,
+      "sortPriority": 6
+    },
+    {
+      "selectionId": 39428630,
+      "runnerName": "7. Marlini",
+      "handicap": 0,
+      "sortPriority": 7
+    },
+    {
+      "selectionId": 35880841,
+      "runnerName": "8. Regal Dividend",
+      "handicap": 0,
+      "sortPriority": 8
+    },
+    {
+      "selectionId": 28209276,
+      "runnerName": "9. Winnies Wine",
+      "handicap": 0,
+      "sortPriority": 9
+    },
+    {
+      "selectionId": 1128380,
+      "runnerName": "10. Taxi",
+      "handicap": 0,
+      "sortPriority": 10
+    }
+  ]
+}
