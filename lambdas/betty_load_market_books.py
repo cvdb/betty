@@ -1,11 +1,15 @@
-import argparse
 import os
 import datetime
+from decimal import Decimal
 import time
 import json
 import pandas as pd
 import numpy as np
 import pytz
+from pprint import pprint
+import boto3
+from botocore.exceptions import ClientError
+
 
 import betfairlightweight
 from betfairlightweight import filters
@@ -14,32 +18,19 @@ from betfairlightweight.resources.bettingresources import (
     MarketBook
 )
 
-# Change this certs path to wherever you're storing your certificates
-certs_path = r'/home/cvdb/projects/betty/betty/app/key/'
 
 # create trading instance
-certs_path = r'/home/cvdb/projects/betty/betty/app/key/'
+# in this case we expect cert to be in same location as this file.
+dir_path = os.path.dirname(os.path.realpath(__file__))
 my_username = "clinton.vdb@gmail.com"
 my_password = "11qA22ws#"
 my_app_key = "oTkHIrE7nbMAWSq1"
 trading = betfairlightweight.APIClient(username=my_username,
                                        password=my_password,
                                        app_key=my_app_key,
-                                       certs=certs_path)
+                                       certs=dir_path)
 
 trading.login()
-
-def get_horse_racing_event_type_id():
-    # Filter for just horse racing
-    horse_racing_filter = betfairlightweight.filters.market_filter(text_query='Horse Racing')
-    # This returns a list
-    horse_racing_event_type = trading.betting.list_event_types(
-        filter=horse_racing_filter)
-    # Get the first element of the list
-    horse_racing_event_type = horse_racing_event_type[0]
-    horse_racing_event_type_id = horse_racing_event_type.event_type.id
-    # print(f"The event type id for horse racing is {horse_racing_event_type_id}")
-    return horse_racing_event_type_id
 
 def utc2local(utc):
     tz = pytz.timezone('Australia/Sydney')
@@ -81,7 +72,7 @@ def is_target_market(market_catalogue):
 # first to start, matching filter criteria
 def get_market_catalogues():
     market_catalogue_filter = betfairlightweight.filters.market_filter(
-        event_type_ids=[get_horse_racing_event_type_id()],
+        event_type_ids=['7'],
         market_countries=['AU'],
         # in_play_only=True,
         bsp_only=True
@@ -130,7 +121,7 @@ def get_market_catalogues():
 def get_fav_runner(runners):
     lowest_runner = runners[0];
     for runner in runners:
-        print(runner.status)
+        # print(runner.status)
         if runner.status == 'ACTIVE' and runner.sp.actual_sp < lowest_runner.sp.actual_sp:
             lowest_runner = runner
     return lowest_runner
@@ -182,27 +173,106 @@ def get_market_books(marketids):
     })
     return df
 
-def place_bets():
+def put_market_book(market_book, dynamodb=None):
+    if not dynamodb:
+        dynamodb = boto3.resource('dynamodb', endpoint_url="http://localhost:8000")
+    table = dynamodb.Table('market_books')
+
+    # In this case we only want to insert if not exists
+    current = get_market_book(market_book.get('market_id'), dynamodb)
+    if current:
+        return
+
+    response = table.put_item(
+       Item={
+            'market_id': market_book.get('market_id'),
+            'market_status': market_book.get('market_status'),
+            'bsp_reconciled': market_book.get('bsp_reconciled'),
+            'inplay': market_book.get('inplay'),
+            'total_matched': market_book.get('total_matched'),
+            'runner_selection_id': market_book.get('runner_selection_id'),
+            'runner_bsp': market_book.get('runner_bsp')
+        }
+    )
+    return response
+
+# This is only for local testing
+def create_market_book_table(dynamodb=None):
+    if not dynamodb:
+        dynamodb = boto3.resource('dynamodb', endpoint_url="http://localhost:8000")
+
+    table = dynamodb.create_table(
+        TableName='market_books',
+        KeySchema=[
+            {
+                'AttributeName': 'market_id',
+                'KeyType': 'HASH'  # Partition key
+            }
+        ],
+        AttributeDefinitions=[
+            {
+                'AttributeName': 'market_id',
+                'AttributeType': 'S'
+            }
+        ],
+        ProvisionedThroughput={
+            'ReadCapacityUnits': 5,
+            'WriteCapacityUnits': 5
+        }
+    )
+    return table
+
+def get_market_book(market_id, dynamodb=None):
+    if not dynamodb:
+        dynamodb = boto3.resource('dynamodb', endpoint_url="http://localhost:8000")
+    table = dynamodb.Table('market_books')
+    try:
+        response = table.get_item(Key={'market_id': market_id})
+    except ClientError as e:
+        print(e.response['Error']['Message'])
+    else:
+        return response.get('Item')
+
+def lambda_handler(event, context):
     print('placing bets')
     df_market_catalogues = get_market_catalogues()
     print('\nmarket catalogues: \n' + str(df_market_catalogues))
-    # now get the market book for each market_catalogue
     df_market_books = get_market_books(df_market_catalogues['market_id'].tolist())
-    # df_market_books = get_market_books(['1.183229073'])
     print('\nmarket books: \n' + str(df_market_books))
 
-def ProcessArgs():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--command', help='run a command of some type')
-    return parser.parse_args()
+    dynamodb = boto3.resource('dynamodb',region_name='ap-southeast-2')
+    df_market_books.apply(lambda x: put_market_book({
+        'market_id': x['market_id'], 
+        'market_status': x['market_status'], 
+        'bsp_reconciled': x['bsp_reconciled'], 
+        'inplay': x['inplay'], 
+        'total_matched': Decimal(str((x['total_matched'] or 0))), 
+        'runner_selection_id': x['runner_selection_id'], 
+        'runner_bsp': Decimal(str((x['runner_bsp'] or 0)))
+        }, dynamodb), axis=1)
 
-if __name__ == '__main__':
-    args = ProcessArgs()
+    return { "statusCode": 200 }
 
-    if args.command == 'place_bets':
-        place_bets()
-    else:
-        print('invalid selection')
+
+
+
+# if __name__ == '__main__':
+#     lambda_handler(None, None)
+    # create_market_book_table()
+    # put_market_book({ 
+    #     'market_id': '12345', 
+    #     'market_status': 'CLOSED', 
+    #     'bsp_reconciled': False, 
+    #     'inplay': False, 
+    #     'total_matched': Decimal(str(999.99)), 
+    #     'runner_selection_id': '3333333.444', 
+    #     'runner_bsp': Decimal(str(123.99))
+    #     })
+    # pprint(get_market_book('12345'), sort_dicts=False)
+
+
+
+
 
 
 
