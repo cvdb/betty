@@ -14,8 +14,6 @@ from betfairlightweight.resources.bettingresources import (
     MarketBook
 )
 
-# Change this certs path to wherever you're storing your certificates
-certs_path = r'/home/cvdb/projects/betty/betty/app/key/'
 
 # create trading instance
 certs_path = r'/home/cvdb/projects/betty/betty/app/key/'

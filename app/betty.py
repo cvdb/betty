@@ -80,7 +80,7 @@ def show_betting_ledger(running_bal, iswin, bsp, bets_placed):
 
     # Now we adjust the running balance by win loose
     running_bal['balance'] = running_bal['balance'] + winlooseamt
-    print('prev amtlost: ' + str(running_bal['amtlost']) + ', amtbet: ' + str(amtbet) + ', bsp: ' + str(bsp) + ', winloose: ' + str(winlooseamt))
+    # print('prev amtlost: ' + str(running_bal['amtlost']) + ', amtbet: ' + str(amtbet) + ', bsp: ' + str(bsp) + ', winloose: ' + str(winlooseamt))
 
     # we need to keep a running total of loose amounts
     # so that we know how much to bet above to recover 

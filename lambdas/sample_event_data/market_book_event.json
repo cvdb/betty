@@ -1,0 +1,149 @@
+{
+    "Records": [
+        {
+            "eventID": "26d56f93952c1a2f4c074497795d7c33",
+            "eventName": "INSERT",
+            "eventVersion": "1.1",
+            "eventSource": "aws:dynamodb",
+            "awsRegion": "ap-southeast-2",
+            "dynamodb": {
+                "ApproximateCreationDateTime": 1621213068,
+                "Keys": {
+                    "market_id": {
+                        "S": "1.183436597"
+                    }
+                },
+                "NewImage": {
+                    "inplay": {
+                        "BOOL": false
+                    },
+                    "market_start_time": {
+                        "S": "2021-05-17T12:02:00+10:00"
+                    },
+                    "runner_bsp": {
+                        "N": "0"
+                    },
+                    "bsp_reconciled": {
+                        "BOOL": false
+                    },
+                    "market_id": {
+                        "S": "1.183436597"
+                    },
+                    "market_status": {
+                        "S": "OPEN"
+                    },
+                    "runner_selection_id": {
+                        "S": "None"
+                    },
+                    "market_start_time_utc": {
+                        "S": "2021-05-17T02:02:00"
+                    },
+                    "total_matched": {
+                        "N": "122.86"
+                    }
+                },
+                "SequenceNumber": "16720700000000002183854402",
+                "SizeBytes": 212,
+                "StreamViewType": "NEW_IMAGE"
+            },
+            "eventSourceARN": "arn:aws:dynamodb:ap-southeast-2:547477237596:table/market_books/stream/2021-05-17T00:03:45.003"
+        },
+        {
+            "eventID": "94c63c5ec238e7f348ec3241984e1f51",
+            "eventName": "INSERT",
+            "eventVersion": "1.1",
+            "eventSource": "aws:dynamodb",
+            "awsRegion": "ap-southeast-2",
+            "dynamodb": {
+                "ApproximateCreationDateTime": 1621213068,
+                "Keys": {
+                    "market_id": {
+                        "S": "1.183433780"
+                    }
+                },
+                "NewImage": {
+                    "inplay": {
+                        "BOOL": false
+                    },
+                    "market_start_time": {
+                        "S": "2021-05-17T12:20:00+10:00"
+                    },
+                    "runner_bsp": {
+                        "N": "0"
+                    },
+                    "bsp_reconciled": {
+                        "BOOL": false
+                    },
+                    "market_id": {
+                        "S": "1.183433780"
+                    },
+                    "market_status": {
+                        "S": "OPEN"
+                    },
+                    "runner_selection_id": {
+                        "S": "None"
+                    },
+                    "market_start_time_utc": {
+                        "S": "2021-05-17T02:20:00"
+                    },
+                    "total_matched": {
+                        "N": "1089.06"
+                    }
+                },
+                "SequenceNumber": "16720800000000002183854416",
+                "SizeBytes": 212,
+                "StreamViewType": "NEW_IMAGE"
+            },
+            "eventSourceARN": "arn:aws:dynamodb:ap-southeast-2:547477237596:table/market_books/stream/2021-05-17T00:03:45.003"
+        },
+        {
+            "eventID": "3a504d42cfd57f701440217f3370efad",
+            "eventName": "INSERT",
+            "eventVersion": "1.1",
+            "eventSource": "aws:dynamodb",
+            "awsRegion": "ap-southeast-2",
+            "dynamodb": {
+                "ApproximateCreationDateTime": 1621213068,
+                "Keys": {
+                    "market_id": {
+                        "S": "1.183436599"
+                    }
+                },
+                "NewImage": {
+                    "inplay": {
+                        "BOOL": false
+                    },
+                    "market_start_time": {
+                        "S": "2021-05-17T12:27:00+10:00"
+                    },
+                    "runner_bsp": {
+                        "N": "0"
+                    },
+                    "bsp_reconciled": {
+                        "BOOL": false
+                    },
+                    "market_id": {
+                        "S": "1.183436599"
+                    },
+                    "market_status": {
+                        "S": "OPEN"
+                    },
+                    "runner_selection_id": {
+                        "S": "None"
+                    },
+                    "market_start_time_utc": {
+                        "S": "2021-05-17T02:27:00"
+                    },
+                    "total_matched": {
+                        "N": "0.05"
+                    }
+                },
+                "SequenceNumber": "16720900000000002183854417",
+                "SizeBytes": 210,
+                "StreamViewType": "NEW_IMAGE"
+            },
+            "eventSourceARN": "arn:aws:dynamodb:ap-southeast-2:547477237596:table/market_books/stream/2021-05-17T00:03:45.003"
+        }
+    ]
+}
+

@@ -1,0 +1,169 @@
+The documentation on Betfair for calculating near and far prices is quite brief. Could anyone here provide me with a worked example of how to calculate the far and near price for this data from Betfair?
+
+The actual far and near prices are in the data below, but I want to learn how to calculate it manually.
+
+{'availableToBack': [{'price': 3.0, 'size': 199.7},
+                     {'price': 2.98, 'size': 142.55},
+                     {'price': 2.96, 'size': 48.29},
+                     {'price': 2.94, 'size': 118.08},
+                     {'price': 2.92, 'size': 98.75},
+                     {'price': 2.9, 'size': 283.45},
+                     {'price': 2.88, 'size': 121.39},
+                     {'price': 2.86, 'size': 184.12},
+                     {'price': 2.84, 'size': 177.02},
+                     {'price': 2.82, 'size': 149.17},
+                     {'price': 2.8, 'size': 140.03},
+                     {'price': 2.78, 'size': 105.76},
+                     {'price': 2.76, 'size': 135.14},
+                     {'price': 2.74, 'size': 53.54},
+                     {'price': 2.72, 'size': 41.66},
+                     {'price': 2.7, 'size': 42.15},
+                     {'price': 2.66, 'size': 10.0},
+                     {'price': 2.56, 'size': 12.0},
+                     {'price': 2.54, 'size': 93.07},
+                     {'price': 2.4, 'size': 0.21},
+                     {'price': 2.34, 'size': 107.0},
+                     {'price': 2.32, 'size': 10.0},
+                     {'price': 2.26, 'size': 1.0},
+                     {'price': 2.22, 'size': 252.91},
+                     {'price': 2.02, 'size': 5.0},
+                     {'price': 2.0, 'size': 2504.25},
+                     {'price': 1.83, 'size': 5464.0},
+                     {'price': 1.8, 'size': 1678.35},
+                     {'price': 1.7, 'size': 100.0},
+                     {'price': 1.6, 'size': 5.0},
+                     {'price': 1.51, 'size': 0.35},
+                     {'price': 1.44, 'size': 10.0},
+                     {'price': 1.32, 'size': 37.5},
+                     {'price': 1.31, 'size': 587.09},
+                     {'price': 1.25, 'size': 3.0},
+                     {'price': 1.13, 'size': 6.49},
+                     {'price': 1.1, 'size': 32.0},
+                     {'price': 1.03, 'size': 66.0},
+                     {'price': 1.02, 'size': 15050.0},
+                     {'price': 1.01, 'size': 1759.61}],
+ 'availableToLay': [{'price': 3.05, 'size': 50.27},
+                    {'price': 3.1, 'size': 222.38},
+                    {'price': 3.15, 'size': 406.65},
+                    {'price': 3.2, 'size': 122.67},
+                    {'price': 3.25, 'size': 56.32},
+                    {'price': 3.3, 'size': 69.86},
+                    {'price': 3.35, 'size': 66.76},
+                    {'price': 3.4, 'size': 204.27},
+                    {'price': 3.45, 'size': 5.11},
+                    {'price': 3.5, 'size': 27.02},
+                    {'price': 3.55, 'size': 1.31},
+                    {'price': 3.6, 'size': 2.46},
+                    {'price': 3.7, 'size': 8.0},
+                    {'price': 3.75, 'size': 181.81},
+                    {'price': 3.8, 'size': 102.0},
+                    {'price': 3.85, 'size': 132.0},
+                    {'price': 3.9, 'size': 125.5},
+                    {'price': 3.95, 'size': 50.0},
+                    {'price': 4.0, 'size': 204.4},
+                    {'price': 4.1, 'size': 161.0},
+                    {'price': 4.2, 'size': 209.87},
+                    {'price': 4.3, 'size': 134.0},
+                    {'price': 4.4, 'size': 137.0},
+                    {'price': 4.5, 'size': 106.0},
+                    {'price': 4.6, 'size': 31.0},
+                    {'price': 4.7, 'size': 1.89},
+                    {'price': 4.8, 'size': 6.0},
+                    {'price': 5.0, 'size': 6.0},
+                    {'price': 5.1, 'size': 980.0},
+                    {'price': 5.2, 'size': 16.0},
+                    {'price': 5.4, 'size': 6.58},
+                    {'price': 5.5, 'size': 3.0},
+                    {'price': 6.2, 'size': 484.0},
+                    {'price': 9.6, 'size': 1.31},
+                    {'price': 29.0, 'size': 0.1},
+                    {'price': 30.0, 'size': 2.0},
+                    {'price': 100.0, 'size': 0.71},
+                    {'price': 200.0, 'size': 50.0},
+                    {'price': 330.0, 'size': 0.13},
+                    {'price': 380.0, 'size': 0.15},
+                    {'price': 880.0, 'size': 0.07},
+                    {'price': 900.0, 'size': 0.21},
+                    {'price': 1000.0, 'size': 12.0}],
+ 'tradedVolume': [{'price': 2.82, 'size': 52.82},
+                  {'price': 2.84, 'size': 510.91},
+                  {'price': 2.86, 'size': 231.46},
+                  {'price': 2.88, 'size': 576.84},
+                  {'price': 2.9, 'size': 352.7},
+                  {'price': 2.92, 'size': 1046.12},
+                  {'price': 2.94, 'size': 1801.12},
+                  {'price': 2.96, 'size': 684.53},
+                  {'price': 2.98, 'size': 837.79},
+                  {'price': 3.0, 'size': 1653.46},
+                  {'price': 3.05, 'size': 1901.79},
+                  {'price': 3.1, 'size': 976.5},
+                  {'price': 3.15, 'size': 1372.35},
+                  {'price': 3.2, 'size': 1152.81},
+                  {'price': 3.25, 'size': 1258.86},
+                  {'price': 3.3, 'size': 1238.7},
+                  {'price': 3.35, 'size': 1421.73},
+                  {'price': 3.4, 'size': 690.52},
+                  {'price': 3.45, 'size': 617.1},
+                  {'price': 3.5, 'size': 535.21},
+                  {'price': 3.55, 'size': 13.53},
+                  {'price': 3.6, 'size': 140.68},
+                  {'price': 3.65, 'size': 57.06},
+                  {'price': 3.7, 'size': 29.87},
+                  {'price': 3.85, 'size': 11.31},
+                  {'price': 3.95, 'size': 11.31},
+                  {'price': 4.0, 'size': 40.42},
+                  {'price': 4.1, 'size': 102.25},
+                  {'price': 4.2, 'size': 629.99},
+                  {'price': 4.3, 'size': 289.54},
+                  {'price': 4.4, 'size': 372.96},
+                  {'price': 4.5, 'size': 570.75},
+                  {'price': 4.6, 'size': 21.38}]}
+{'backStakeTaken': [{'price': 1.01, 'size': 784.54},
+                    {'price': 3.0, 'size': 5.0},
+                    {'price': 3.4, 'size': 8.0},
+                    {'price': 3.5, 'size': 2.44},
+                    {'price': 3.55, 'size': 60.0},
+                    {'price': 4.0, 'size': 150.0}],
+ 'farPrice': 2.56,
+ 'layLiabilityTaken': [{'price': 1000.0, 'size': 988.15},
+                       {'price': 4.0, 'size': 35.0},
+                       {'price': 2.56, 'size': 600.3}],
+ 'nearPrice': 2.993840265781219}
+
+Betfair's odds system is somewhat different to the more conventional bookmakers.
+
+They allow punters to bet against each other. A punter has two choices, one is to back an event for a win, the other is to back the event not to happen. The latter is called a lay bet.
+
+Punters can set their own odds, stake and bet type, and then wait for another punter to match this bet. This punter (the matcher) agrees to payout if the punter is right. If the punter is wrong, the matcher wins the punters stake.
+
+Betfair then use the information from the matched betting process to determine the starting price (SP). The starting price is used for a different betting system, called the Exchange, and offers fixed odds, namely the starting price.
+
+Until the market is actually closed, the starting price can only be estimated, and Betfair have two methods for this, the far price and the near price.
+
+The far price is calculated using the unmatched bets, as the matched bets are between punters who have agreed a mutually acceptable price, and therefore can be considered as separate bets from unmatched bets.
+
+Using the data:
+
+{'backStakeTaken': [{'price': 1.01, 'size': 784.54},
+                    {'price': 3.0, 'size': 5.0},
+                    {'price': 3.4, 'size': 8.0},
+                    {'price': 3.5, 'size': 2.44},
+                    {'price': 3.55, 'size': 60.0},
+                    {'price': 4.0, 'size': 150.0}],
+ 'farPrice': 2.56,
+ 'layLiabilityTaken': [{'price': 1000.0, 'size': 988.15},
+                       {'price': 4.0, 'size': 35.0},
+                       {'price': 2.56, 'size': 600.3}],
+ 'nearPrice': 2.993840265781219}
+
+
+The unmatched bets are given by the prices 1.01 in backStakeTaken and 1000.0 in layLiabilityTaken.
+
+So, 988.15/784.54=1.2595278..., and Betfair uses decimal odds, and also includes the stake (so add 1), and so this becomes the 2.56 given as the far price.
+
+There is more information at the Betfair FAQ's and the Betfair Developer Program.
+
+I can't see how they get to the near price, I think it considers bets placed on the Exchange that are not placed at an offered SP but on the final SP.
+
+EDIT I've just double-checked the figures, and they're not quite right! But the method seems sound enough, so I'll leave my post intact for the moment.
+
