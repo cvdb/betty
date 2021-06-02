@@ -4,7 +4,14 @@ import pandas as pd
 from data import load_horse_racing
 from horse_racing import get_race_data
 from horse_racing import get_11_perc_race_data
+from lay_multiple import get_lay_bsp_list
 
+
+def set_no_tructate():
+    pd.set_option('display.max_rows', None)
+    pd.set_option('display.max_columns', None)
+    pd.set_option('display.width', None)
+    pd.set_option('display.max_colwidth', -1)
 
 def show_horse_racing():
     df = load_horse_racing()
@@ -67,14 +74,18 @@ def show_betting_ledger(running_bal, iswin, bsp, bets_placed):
     # We are getting the results here, but we assume that we bet
     # blind just before the race.
 
-    # Calc how much to bet to make $10
+    # Calc how much to bet to make $10 PROFIT...this means less amount bet
     # we base this on the amount lost before a final win
-    amtbet = ((-1 * running_bal['amtlost']) + running_bal['wintarget']) / bsp
+    amtbet = ((-1 * running_bal['amtlost']) + running_bal['wintarget']) / (bsp -1)
 
+    # ALWAYS subtract the amount bet from the running balance
     # calc win loose amount
     winlooseamt = 0;
     if iswin:
-        winlooseamt = amtbet * bsp 
+        # We spent bet amount
+        winlooseamt = -1 * amtbet
+        # and won (bet amount X BSP)
+        winlooseamt = winlooseamt + (amtbet * bsp)
     else:
         winlooseamt = -1 * amtbet
 
@@ -129,7 +140,7 @@ def test_bsp_perc_betting():
 def test_lowest_bsp_betting():
     print('Testing lowest BSP betting')
     df = get_race_data(load_horse_racing())
-    df = df[(df['BSP_MIN'] >= 1) & (df['BSP_MIN'] <= 2)]
+    df = df[(df['BSP_MIN'] >= 1.5) & (df['BSP_MIN'] <= 3)]
     df = df[["BSP_WIN", "BSP_MIN", "BSP_LIST_ROUNDED"]]
     winning = df[df['BSP_WIN'] == df['BSP_MIN']]
     loosing = df[df['BSP_WIN'] != df['BSP_MIN']]
@@ -138,7 +149,7 @@ def test_lowest_bsp_betting():
     print('total races: ' + str(len(df)))
     print('total winning races: ' + str(len(winning)))
     print('total loosing races: ' + str(len(loosing)))
-    running_bal = { 'balance': 0, 'lowest_balance': 0, 'max_balance': 0, 'wintarget': 35, 'amtlost': 0 }
+    running_bal = { 'balance': 0, 'lowest_balance': 0, 'max_balance': 0, 'wintarget': 5, 'amtlost': 0 }
     # NOTE: we shuffle the rows into a random order first
     df.sample(frac=1).apply(lambda x: show_betting_ledger(running_bal, x['BSP_WIN'] == x['BSP_MIN'], x['BSP_MIN'], 1), axis=1)
     print('lowest balance: ' + str(running_bal['lowest_balance']))
@@ -146,6 +157,15 @@ def test_lowest_bsp_betting():
     print('final balance: ' + str(running_bal['balance']))
 
 
+def test_lay_multiple():
+    print('Testing lay multiple')
+    set_no_tructate()
+    df = get_race_data(load_horse_racing())
+    # print(df[["BSP_LIST_ROUNDED"]])
+        # print('RESULT: ' + str(get_lay_bsp_list(l1)))
+    df['LAY_BSP_LIST'] = df.apply(lambda x: get_lay_bsp_list(x['BSP_LIST']), axis=1)
+    winners = df[df['LAY_BSP_LIST'] > 0]
+    print(winners[["LAY_BSP_LIST"]])
 
 def ProcessArgs():
     parser = argparse.ArgumentParser()
@@ -165,6 +185,8 @@ if __name__ == '__main__':
         test_bsp_perc_betting()
     elif args.show == 'test_lowest_bsp_betting':
         test_lowest_bsp_betting()
+    elif args.show == 'test_lay_multiple':
+        test_lay_multiple()
     elif args.show == 'show_win_bsp_bins':
         show_win_bsp_bins()
     elif args.show == 'show_loose_bsp_bins':

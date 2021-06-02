@@ -7,9 +7,9 @@ def as_decimal(val):
     if not val:
         return Decimal('0')
     if isinstance(val, str):
-        if val.isdecimal():
+        try:
             return Decimal(val)
-        else:
+        except ValueError:
             return Decimal('0')
     if math.isnan(val):
         return Decimal('0')
@@ -23,6 +23,7 @@ def clean_market_book_record(record):
     get_s = lambda x: x.get('S') if x else None
     get_n = lambda x: x.get('N') if x else None
     get_bool = lambda x: x.get('BOOL') if x else None
+    as_decimal(get_n(record.get('runner_bsp')))
     return {
             'market_id': get_s(record.get('market_id')),
             'market_start_time_utc': get_s(record.get('market_start_time_utc')),
@@ -35,5 +36,9 @@ def clean_market_book_record(record):
             'runner_near_bsp': as_decimal(get_n(record.get('runner_near_bsp'))),
             'runner_far_bsp': as_decimal(get_n(record.get('runner_far_bsp'))),
             'runner_bsp': as_decimal(get_n(record.get('runner_bsp'))),
+            'run_id': get_s(record.get('run_id')),
+            'bet_id': get_s(record.get('bet_id')),
+            'amt_bet': as_decimal(get_n(record.get('amt_bet'))),
+            'win_loose': as_decimal(get_n(record.get('win_loose'))),
             'updated_at': get_s(record.get('updated_at'))
             }

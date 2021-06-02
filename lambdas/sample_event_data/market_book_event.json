@@ -21,10 +21,10 @@
                         "S": "2021-05-17T12:02:00+10:00"
                     },
                     "runner_bsp": {
-                        "N": "0"
+                        "N": "1.22"
                     },
                     "bsp_reconciled": {
-                        "BOOL": false
+                        "BOOL": true
                     },
                     "market_id": {
                         "S": "1.183436597"
@@ -33,7 +33,7 @@
                         "S": "OPEN"
                     },
                     "runner_selection_id": {
-                        "S": "None"
+                        "S": "12345"
                     },
                     "market_start_time_utc": {
                         "S": "2021-05-17T02:02:00"
@@ -69,10 +69,10 @@
                         "S": "2021-05-17T12:20:00+10:00"
                     },
                     "runner_bsp": {
-                        "N": "0"
+                        "N": "1.33"
                     },
                     "bsp_reconciled": {
-                        "BOOL": false
+                        "BOOL": true
                     },
                     "market_id": {
                         "S": "1.183433780"
@@ -81,7 +81,7 @@
                         "S": "OPEN"
                     },
                     "runner_selection_id": {
-                        "S": "None"
+                        "S": "12345"
                     },
                     "market_start_time_utc": {
                         "S": "2021-05-17T02:20:00"
@@ -117,10 +117,10 @@
                         "S": "2021-05-17T12:27:00+10:00"
                     },
                     "runner_bsp": {
-                        "N": "0"
+                        "N": "1.44"
                     },
                     "bsp_reconciled": {
-                        "BOOL": false
+                        "BOOL": true
                     },
                     "market_id": {
                         "S": "1.183436599"
@@ -129,7 +129,7 @@
                         "S": "OPEN"
                     },
                     "runner_selection_id": {
-                        "S": "None"
+                        "S": "12345"
                     },
                     "market_start_time_utc": {
                         "S": "2021-05-17T02:27:00"

@@ -17,9 +17,9 @@ from betfairlightweight.resources.bettingresources import (
 
 # create trading instance
 certs_path = r'/home/cvdb/projects/betty/betty/app/key/'
-my_username = "clinton.vdb@gmail.com"
-my_password = "11qA22ws#"
-my_app_key = "oTkHIrE7nbMAWSq1"
+my_username = "???"
+my_password = "???"
+my_app_key = "???"
 trading = betfairlightweight.APIClient(username=my_username,
                                        password=my_password,
                                        app_key=my_app_key,

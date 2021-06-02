@@ -21,9 +21,9 @@ from betfairlightweight.resources.bettingresources import (
 # create trading instance
 # in this case we expect cert to be in same location as this file.
 dir_path = os.path.dirname(os.path.realpath(__file__))
-my_username = "clinton.vdb@gmail.com"
-my_password = "11qA22ws#"
-my_app_key = "oTkHIrE7nbMAWSq1"
+my_username = "???"
+my_password = "???"
+my_app_key = "???"
 trading = betfairlightweight.APIClient(username=my_username,
                                        password=my_password,
                                        app_key=my_app_key,
@@ -78,7 +78,7 @@ def format_market_book(mbook):
         mb['runner_near_bsp'] = best_runner.sp.near_price
         mb['runner_far_bsp'] = best_runner.sp.far_price
         mb['runner_bsp'] = best_runner.sp.actual_sp
-    else:A
+    else:
         mb['runner_selection_id'] = None
         mb['runner_near_bsp'] = None
         mb['runner_far_bsp'] = None
@@ -128,8 +128,8 @@ def should_bet_market_book(market_book):
     #    print('skipping market, BSP too high:' + market_data)
     #    return False
 
-    if as_decimal(market_book.get('runner_bsp')) > 2:
-        print('skipping market, BSP too high:' + market_data)
+    if as_decimal(market_book.get('runner_bsp')) > 2 or as_decimal(market_book.get('runner_bsp')) <= 0:
+        print('skipping market, BSP too high or ZERO:' + market_data)
         return False
         
     # Try best as close to START as possible here....
@@ -165,19 +165,18 @@ def put_bet_market_book(record, dynamodb=None):
         dynamodb = boto3.resource('dynamodb', endpoint_url="http://localhost:8000")
     table = dynamodb.Table('bet_market_books')
     
-    # In this case we only want to insert if not exists
-    current = get_bet_market_book(record['market_id']['S'], dynamodb)
-    if current:
-        return
-    
+    # Here we need to ensure we only ever insert 1 row in this table per bet
+    # because it triggers placing a bet.
     response = table.put_item(
-       Item={
+        ConditionExpression='attribute_not_exists(market_id)',
+        Item={
             'market_id': record['market_id']['S'],
             'market_start_time_utc': record['market_start_time_utc']['S'],
             'market_start_time': record['market_start_time']['S'],
             'market_status': record['market_status']['S'],
             'bsp_reconciled': record['bsp_reconciled']['BOOL'],
             'inplay': record['inplay']['BOOL'],
+            'in_progress': True,
             'total_matched': as_decimal(record['total_matched']['N']),
             'runner_selection_id': str(record['runner_selection_id']['S']),
             'runner_near_bsp': as_decimal(record['runner_near_bsp']['N']),
@@ -253,28 +252,6 @@ def merge_changed_data(rec, mbook):
     rec['updated_at']['S'] = datetime.datetime.utcnow().isoformat()
     return rec
 
-def get_bet_runs(dynamodb):
-    if not dynamodb:
-        dynamodb = boto3.resource('dynamodb', endpoint_url="http://localhost:8000")
-    table = dynamodb.Table('bet_run')
-    response = table.scan()
-    data = response['Items']
-    while 'LastEvaluatedKey' in response:
-        response = table.scan(ExclusiveStartKey=response['LastEvaluatedKey'])
-        data.extend(response['Items'])
-    return data
-
-def get_free_bet_run():
-    bet_runs = get_bet_runs()
-    free_run = None
-    for br in bet_runs:
-        
-
-def place_bet(rec):
-    print('BETTING:' + json.dumps(rec))
-    bet_run = get_free_bet_run()
-    put_bet_market_book(rec, dynamodb)
-
 
 def lambda_handler(event, context):
     # based on the list of market books in the event
@@ -295,7 +272,9 @@ def lambda_handler(event, context):
                     continue
                 rec = merge_changed_data(rec, mbook)
                 if should_bet_market_book(mbook):
-                    place_bet(rec)
+                    print('BETTING:' + json.dumps(rec))
+                    put_market_book(rec, dynamodb)
+                    put_bet_market_book(rec, dynamodb)
                 else:
                     print('PUTTING:' + json.dumps(rec))
                     put_market_book(rec, dynamodb)

@@ -23,6 +23,12 @@ def create_tables(dynamodb=None):
         AttributeDefinitions=[{ 'AttributeName': 'run_id', 'AttributeType': 'S' }],
         ProvisionedThroughput={ 'ReadCapacityUnits': 5, 'WriteCapacityUnits': 5 }
     )
+    dynamodb.create_table(
+        TableName='current_bets',
+        KeySchema=[{ 'AttributeName': 'market_id', 'KeyType': 'HASH' }],
+        AttributeDefinitions=[{ 'AttributeName': 'market_id', 'AttributeType': 'S' }],
+        ProvisionedThroughput={ 'ReadCapacityUnits': 5, 'WriteCapacityUnits': 5 }
+    )
 
 
 def put_item(request, dynamodb=None):
@@ -35,6 +41,18 @@ def put_item(request, dynamodb=None):
         print(e.response['Error']['Message'])
     else:
         return request['item']
+
+
+def delete_item(request, dynamodb=None):
+    if not dynamodb:
+        dynamodb = boto3.resource('dynamodb', endpoint_url="http://localhost:8000")
+    table = dynamodb.Table(request['table_name'])
+    try:
+        response = table.delete_item(Key=request['key'])
+    except ClientError as e:
+        print(e.response['Error']['Message'])
+    else:
+        return response.get('Item')
 
 
 def get_item(request, dynamodb=None):
